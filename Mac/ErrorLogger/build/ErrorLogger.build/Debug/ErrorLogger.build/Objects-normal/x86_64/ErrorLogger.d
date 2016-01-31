@@ -1,1 +1,1 @@
-dependencies: /Users/cmk/Desktop/Alg\ (1)/ErrorLogger/ErrorLogger.cpp
+dependencies: /Users/cmk/Desktop/workspace/ErrorLogger/ErrorLogger.cpp

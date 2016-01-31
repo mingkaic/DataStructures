@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB1A39A51C4F4F050078C572 /* TreeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB1A39A41C4F4F050078C572 /* TreeTest.cpp */; };
+		AB3E9A291C542B230079C256 /* TreeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB3E9A281C542B230079C256 /* TreeTest.cpp */; };
+		AB3E9A2C1C542B430079C256 /* RBTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB3E9A2A1C542B430079C256 /* RBTree.cpp */; };
+		AB3E9A2F1C542E560079C256 /* treeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB3E9A2D1C542E560079C256 /* treeNode.cpp */; };
+		AB3E9A321C542E6E0079C256 /* biNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB3E9A301C542E6E0079C256 /* biNode.cpp */; };
+		AB3E9A351C54BE2F0079C256 /* BSTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB3E9A331C54BE2F0079C256 /* BSTree.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +28,15 @@
 
 /* Begin PBXFileReference section */
 		AB1A399A1C4F4EC30078C572 /* TreeTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TreeTest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB1A39A41C4F4F050078C572 /* TreeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TreeTest.cpp; path = ../../../Algorithm/TreeTest.cpp; sourceTree = "<group>"; };
+		AB3E9A281C542B230079C256 /* TreeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TreeTest.cpp; path = ../../Algorithm/TreeTest.cpp; sourceTree = "<group>"; };
+		AB3E9A2A1C542B430079C256 /* RBTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RBTree.cpp; path = ../../Algorithm/Structure/RBTree.cpp; sourceTree = "<group>"; };
+		AB3E9A2B1C542B430079C256 /* RBTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RBTree.hpp; path = ../../Algorithm/Structure/RBTree.hpp; sourceTree = "<group>"; };
+		AB3E9A2D1C542E560079C256 /* treeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = treeNode.cpp; path = ../../Algorithm/Structure/treeNode.cpp; sourceTree = "<group>"; };
+		AB3E9A2E1C542E560079C256 /* treeNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = treeNode.hpp; path = ../../Algorithm/Structure/treeNode.hpp; sourceTree = "<group>"; };
+		AB3E9A301C542E6E0079C256 /* biNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = biNode.cpp; path = ../../Algorithm/Structure/biNode.cpp; sourceTree = "<group>"; };
+		AB3E9A311C542E6E0079C256 /* biNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = biNode.hpp; path = ../../Algorithm/Structure/biNode.hpp; sourceTree = "<group>"; };
+		AB3E9A331C54BE2F0079C256 /* BSTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BSTree.cpp; path = ../../Algorithm/Structure/BSTree.cpp; sourceTree = "<group>"; };
+		AB3E9A341C54BE2F0079C256 /* BSTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BSTree.hpp; path = ../../Algorithm/Structure/BSTree.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +53,15 @@
 		AB1A39911C4F4EC30078C572 = {
 			isa = PBXGroup;
 			children = (
-				AB1A399C1C4F4EC30078C572 /* TreeTest */,
+				AB3E9A301C542E6E0079C256 /* biNode.cpp */,
+				AB3E9A311C542E6E0079C256 /* biNode.hpp */,
+				AB3E9A2D1C542E560079C256 /* treeNode.cpp */,
+				AB3E9A2E1C542E560079C256 /* treeNode.hpp */,
+				AB3E9A331C54BE2F0079C256 /* BSTree.cpp */,
+				AB3E9A341C54BE2F0079C256 /* BSTree.hpp */,
+				AB3E9A2A1C542B430079C256 /* RBTree.cpp */,
+				AB3E9A2B1C542B430079C256 /* RBTree.hpp */,
+				AB3E9A281C542B230079C256 /* TreeTest.cpp */,
 				AB1A399B1C4F4EC30078C572 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +72,6 @@
 				AB1A399A1C4F4EC30078C572 /* TreeTest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		AB1A399C1C4F4EC30078C572 /* TreeTest */ = {
-			isa = PBXGroup;
-			children = (
-				AB1A39A41C4F4F050078C572 /* TreeTest.cpp */,
-			);
-			path = TreeTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +130,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB1A39A51C4F4F050078C572 /* TreeTest.cpp in Sources */,
+				AB3E9A321C542E6E0079C256 /* biNode.cpp in Sources */,
+				AB3E9A291C542B230079C256 /* TreeTest.cpp in Sources */,
+				AB3E9A2C1C542B430079C256 /* RBTree.cpp in Sources */,
+				AB3E9A351C54BE2F0079C256 /* BSTree.cpp in Sources */,
+				AB3E9A2F1C542E560079C256 /* treeNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +253,7 @@
 				AB1A39A31C4F4EC30078C572 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

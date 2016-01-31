@@ -7,21 +7,22 @@
 #include <cassert>
 #include <cstddef>
 
-#include "Deque.hpp"
-#include "Queue.hpp"
-#include "Stack.hpp"
+#include "Structure/deque.hpp"
+#include "Structure/queue.hpp"
+#include "Structure/stack.hpp"
 using namespace std;
 
 int main(int argc, char* argv[])
     {
+    char structure[64] = "queue";
+    if (argc > 1)
+        memcpy(structure, argv[1], 64);
+    
     size_t N, testVal;
-    char* structure = new char[256];
-    cout << "enter structure: ";
-    cin >> structure;
     cin >> N;
     size_t* testPlate = new size_t[N];
-    Stack<size_t> s;
-    Queue<size_t> q;
+    stack<size_t> s;
+    queue<size_t> q;
 
     switch (structure[0])
         {

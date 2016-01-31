@@ -9,12 +9,7 @@
 #ifdef __BSTREE__H
 
 template <class T>
-void BSTree<T>::draw()
-    {
-    }
-
-template <class T>
-treeNode<T>* BSTree<T>::BinSearch(T key, treeNode<T>* i_root)
+treeNode<T>* BSTree<T>::BinSearch(T key, treeNode<T>* i_root) const
     {
     treeNode<T>* parent;
     treeNode<T>* child;
@@ -43,20 +38,23 @@ treeNode<T>* BSTree<T>::BinSearch(T key, treeNode<T>* i_root)
     }
 
 template <class T>
-treeNode<T>* BSTree<T>::successor(treeNode<T>* i_root)
+treeNode<T>* BSTree<T>::successorParent(treeNode<T>* i_root)
     {
     treeNode<T>* success = i_root;
-
+    treeNode<T>* parent = NULL;
+    
     if (NULL != i_root->right)
         {
+        parent = success;
         success = i_root->right;
-        }
-    while (NULL != success->left)
-        {
-        success = success->left;
+        while (NULL != success->left)
+            {
+            parent = success;
+            success = success->left;
+            }
         }
 
-    return success;
+    return parent;
     }
 
 template <class T>
@@ -65,9 +63,37 @@ BSTree<T>::BSTree() : root(NULL)
     }
 
 template <class T>
+BSTree<T>::BSTree(const BSTree<T>& src)
+    {
+    if (NULL != src.root)
+        {
+        root = src.root->cascadeCopy();
+        }
+    }
+
+template <class T>
 BSTree<T>::~BSTree()
     {
-    root->cascadeDelete();
+    if (NULL != root)
+        {
+        root->cascadeDelete();
+        }
+    }
+
+template <class T>
+BSTree<T>& BSTree<T>::operator = (const BSTree<T>& src)
+    {
+    if (this != &src)
+        {
+        if (NULL != root)
+            {
+            root->cascadeDelete();
+            }
+        if (NULL != src.root)
+            {
+            root = src.root->cascadeCopy();
+            }
+        }
     }
 
 template <class T>
@@ -116,24 +142,65 @@ bool BSTree<T>::remove(T key)
     {
     bool found = false;
     treeNode<T>* parent = BinSearch(key, root);
-    if (NULL == parent)
+    if (NULL != parent)
         {
-        bool isLeft = parent->getData() > key;
-        treeNode<T>* keyComparer = isLeft ? parent->left : parent->right;
-        treeNode<T>* heir = successor(keyComparer);
-        BinSearch(heir->getData(), keyComparer)->left = heir->right;
-        heir->left = keyComparer->left;
-        heir->right = keyComparer->right;
-        if (isLeft)
+        T p_data = parent->getData();
+        bool isRoot = root == parent && p_data == key;
+        bool isLeft = p_data > key;
+        treeNode<T>* heir = NULL;
+        treeNode<T>* keyComparer;
+        
+        if (isRoot)
             {
-            parent->left = heir;
+            keyComparer = parent;
+            }
+        else if (true == isLeft)
+            {
+            keyComparer = parent->left;
             }
         else
             {
-            parent->right = heir;
+            keyComparer = parent->right;
             }
-        delete keyComparer;
-        found = true;
+
+        if (NULL != keyComparer && key == keyComparer->getData())
+            {
+            treeNode<T>* heirParent = successorParent(keyComparer);
+            if (NULL == heirParent)
+                {
+                if (NULL != keyComparer->left)
+                    {
+                    heir = keyComparer->left;
+                    }
+                }
+            else if (heirParent == keyComparer)
+                {
+                heir = keyComparer->right;
+                heir->left = keyComparer->left;
+                }
+            else
+                {
+                heir = heirParent->left;
+                heirParent->left = heir->right;
+                heir->left = keyComparer->left;
+                heir->right = keyComparer->right;
+                }
+            delete keyComparer;
+            found = true;
+                
+            if (isRoot)
+                {
+                root = heir;
+                }
+            else if (isLeft)
+                {
+                parent->left = heir;
+                }
+            else
+                {
+                parent->right = heir;
+                }
+            }
         }
 
     return found;

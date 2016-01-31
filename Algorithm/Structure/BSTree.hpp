@@ -17,22 +17,22 @@ class BSTree
     {
     private:
         treeNode<T>* root;
-    protected:
         // return   NULL if root is NULL
         //          pointer to root (if root contains key)
         //          pointer to the parent to node containing key
-        treeNode<T>* BinSearch(T key, treeNode<T>* i_root);
-        treeNode<T>* successor(treeNode<T>* i_root);
+        treeNode<T>* BinSearch(T key, treeNode<T>* i_root) const;
+        virtual treeNode<T>* successorParent(treeNode<T>* i_root);
     public:
         BSTree();
+        BSTree(const BSTree<T>& src);
         virtual ~BSTree();
+        BSTree<T>& operator = (const BSTree<T>& src);
 
-        virtual bool insert(T key); // true if key is existed
-        virtual bool remove(T key); // true if removed
+        bool insert(T key); // true if key is existed
+        bool remove(T key); // true if removed
         bool exists(T key);
         //child search(key);
-        
-        void draw();
+        treeNode<T>* getRoot() {return root;}
     };
 
 #include "BSTree.cpp"

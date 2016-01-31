@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		AB1A39C41C4F5A3B0078C572 /* ErrorLogger */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ErrorLogger; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB1A39CE1C4F5A500078C572 /* ErrorLogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ErrorLogger.cpp; path = ../../../ErrorLogger/ErrorLogger.cpp; sourceTree = "<group>"; };
+		AB1A39CE1C4F5A500078C572 /* ErrorLogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ErrorLogger.cpp; path = ../../ErrorLogger/ErrorLogger.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +41,7 @@
 		AB1A39BB1C4F5A3B0078C572 = {
 			isa = PBXGroup;
 			children = (
+				AB1A39CE1C4F5A500078C572 /* ErrorLogger.cpp */,
 				AB1A39C61C4F5A3B0078C572 /* ErrorLogger */,
 				AB1A39C51C4F5A3B0078C572 /* Products */,
 			);
@@ -57,7 +58,6 @@
 		AB1A39C61C4F5A3B0078C572 /* ErrorLogger */ = {
 			isa = PBXGroup;
 			children = (
-				AB1A39CE1C4F5A500078C572 /* ErrorLogger.cpp */,
 			);
 			path = ErrorLogger;
 			sourceTree = "<group>";
@@ -237,6 +237,7 @@
 				AB1A39CD1C4F5A3B0078C572 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

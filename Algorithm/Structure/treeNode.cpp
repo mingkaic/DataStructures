@@ -41,4 +41,19 @@ void treeNode<T>::cascadeDelete()
         }
     }
 
+template <class T>
+treeNode<T>* treeNode<T>::cascadeCopy()
+    {
+    treeNode<T>* cpy = new treeNode<T>(this->data);
+    if (NULL != left)
+        {
+        cpy->left = left->cascadeCopy();
+        }
+    if (NULL != right)
+        {
+        cpy->right = right->cascadeCopy();
+        }
+    return cpy;
+    }
+
 #endif /* __TREE_NODE__H */

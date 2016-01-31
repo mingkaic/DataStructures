@@ -9,13 +9,13 @@
 #pragma once
 #ifndef __RB_TREE__H
 #define __RB_TREE__H
-
+#include <iostream>
 #include <cstdlib>
 #include <stdexcept>
 #include "BSTree.hpp"
 
 template <class T>
-class RBNode : private treeNode<T>
+class RBNode : public treeNode<T>
     {
     public:
         bool isBlack;
@@ -27,23 +27,31 @@ class RBNode : private treeNode<T>
         RBNode(T data, bool isBlack);
         RBNode(RBNode<T>* left, T data, RBNode<T>* right);
         
+        void cascadeDelete();
         RBNode<T>* cascadeCopy();
     };
 
 template <class T>
-class RBTree : private BSTree<T>
+class RBTree
     {
     private:
         RBNode<T>* root;
-        RBNode<T>* closestNode(RBNode<T>*& root, T data) const;
+        void deleteFixUp(RBNode<T>* parent, bool childIsLeft);
+        void rotate(RBNode<T>* parent, bool rotateLeft);
+        RBNode<T>* successor(RBNode<T>* i_root);
+        // gets exact match if key found, closest match otherwise
+        RBNode<T>* BinSearch(T key, RBNode<T>* root) const;
     public:
         RBTree();
         RBTree(const RBTree<T>& src);
-        ~RBTree();
+        virtual ~RBTree();
         RBTree<T>& operator = (const RBTree<T>& src);
 
-        virtual bool insert(T key);
-        virtual bool remove(T key);
+        bool insert(T key);
+        bool remove(T key);
+        bool exists(T key);
+        
+        RBNode<T>* getRoot() {return root;}
     };
 
 #include "RBTree.cpp"

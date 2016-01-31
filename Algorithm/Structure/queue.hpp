@@ -11,7 +11,7 @@
 #define __QUEUE__H
 
 #include <stdexcept>
-#include "listNode.hpp"
+#include "biNode.hpp"
 
 template <class T>
 class queue

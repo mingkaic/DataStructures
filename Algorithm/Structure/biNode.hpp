@@ -17,7 +17,11 @@ template <class T>
 class biNode : public node<T>
     {
     protected:
-        biNode() {} // for derived classes
+        biNode()
+            {
+            left = NULL;
+            right = NULL;
+            } // for derived classes
     public:
         biNode<T>* left;
         biNode<T>* right;

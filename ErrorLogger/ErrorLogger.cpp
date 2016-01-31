@@ -19,17 +19,23 @@ int main(int argc, const char * argv[])
     vector<string> lines;
     string input;
     bool warningPlus = false;
+    bool programFinished = false;
     while (getline(cin, input))
         {
-        if (0 == input.find_first_of("error:") ||
-            0 == input.find_first_of("warning:"))
+        if (string::npos != input.find("error:") ||
+            string::npos != input.find("warning:"))
             {
+            cout << input << endl;
             warningPlus = true;
+            }
+        else if (string::npos != input.find(">>>SUCCESS<<<"))
+            {
+            programFinished = true;
             }
         lines.push_back(input);
         }
     
-    if (warningPlus)
+    if (warningPlus || false == programFinished)
         {
         stringstream sbuff;
         srand(time(NULL));

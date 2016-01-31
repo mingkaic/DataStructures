@@ -67,9 +67,13 @@ template <class T>
 void queue<T>::enqueue(T data)
     {
     head = new biNode<T>(NULL, data, head);
-    if (NULL == head->next)
+    if (NULL == head->right)
         {
         tail = head;
+        }
+    else
+        {
+        head->right->left = head;
         }
     }
 
@@ -90,8 +94,8 @@ T queue<T>::dequeue()
         }
     else
         {
-        tail = tail->prev;
-        tail->next = NULL;
+        tail = tail->left;
+        tail->right = NULL;
         }
     delete buffer;
 

@@ -1,6 +1,6 @@
 //
 //  node.hpp
-//  List
+//  dataContainer
 //
 //  Created by Mingkai Chen on 2014-06-12.
 //  Copyright © 2014-2016 Mingkai Chen. All rights reserved.

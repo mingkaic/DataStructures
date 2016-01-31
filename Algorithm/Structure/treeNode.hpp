@@ -16,7 +16,11 @@ template <class T>
 class treeNode : public biNode<T>
     {
     protected:
-        treeNode() {} // for derived classes
+        treeNode() // for derived classes
+            {
+            left = NULL;
+            right = NULL;
+            }
     public:
         treeNode<T>* left;
         treeNode<T>* right;
@@ -24,7 +28,9 @@ class treeNode : public biNode<T>
         treeNode(T data);
         treeNode(treeNode<T>* left, T data, treeNode<T>* right);
         virtual ~treeNode() {}
+        
         void cascadeDelete();
+        virtual treeNode<T>* cascadeCopy();
 
         void injectData(T data);
     };

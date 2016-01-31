@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		AB1A39AF1C4F59C90078C572 /* TestGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB1A39B91C4F59E30078C572 /* TestGenerate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestGenerate.cpp; path = ../../../TestGenerate/TestGenerate.cpp; sourceTree = "<group>"; };
+		AB1A39B91C4F59E30078C572 /* TestGenerate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestGenerate.cpp; path = ../../TestGenerate/TestGenerate.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 		AB1A39A61C4F59C90078C572 = {
 			isa = PBXGroup;
 			children = (
-				AB1A39B11C4F59C90078C572 /* TestGenerator */,
+				AB1A39B91C4F59E30078C572 /* TestGenerate.cpp */,
 				AB1A39B01C4F59C90078C572 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +52,6 @@
 				AB1A39AF1C4F59C90078C572 /* TestGenerator */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		AB1A39B11C4F59C90078C572 /* TestGenerator */ = {
-			isa = PBXGroup;
-			children = (
-				AB1A39B91C4F59E30078C572 /* TestGenerate.cpp */,
-			);
-			path = TestGenerator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,6 +229,7 @@
 				AB1A39B81C4F59C90078C572 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

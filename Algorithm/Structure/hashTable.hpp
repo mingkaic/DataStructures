@@ -9,21 +9,22 @@
 #ifndef __HASH_TABLE__H
 #define __HASH_TABLE__H
 
-#include "tuple.hpp"
-#include "listNode.hpp"
+#include "pair.hpp"
+#include "searchList.hpp"
 #include <cstring>
+#include <vector>
 
 template <class T>
 class hashTable
     {
     private:
-        listNode<tuple<std::string, T>>** dictionary;
+        searchList<pair<std::string, T>*>* dictionary;
         size_t curSize;
-        size_t maxSize;
+        size_t indexSize;
         
         size_t nearestPrime(int n);
         bool isPrime(int n);
-        void copy(listNode<tuple<std::string, T>>* arr);
+        void copy(searchList<pair<std::string, T>*>* srcDict);
         size_t hashFunction(std::string str) const;
     public:
         hashTable();
@@ -31,17 +32,20 @@ class hashTable
         hashTable(const hashTable<T>& src);
         ~hashTable();
         hashTable& operator = (const hashTable<T>& src);
+        
+        T& operator [] (std::string key);
 
-        bool insert(std::string);
+        bool insert(std::string, T data);
         bool remove(std::string);
-        bool search(std::string) const;
-        size_t size() const;
-        size_t maxSize() const;
+        bool search(std::string, T& data) const;
+        size_t numInserted() const;
+        size_t numSlot() const;
         double loadFactor() const;
         
-        std::vector<std::string> intersection(const hashTable<T>& src) const;
-        std::vector<std::string> unions(const hashTable<T>& src) const;
-        std::vector<std::string> difference(const hashTable<T>& src) const;
+        // returns vectors of keys
+        std::vector<std::string> hashIntersect(const hashTable<T>& src) const;
+        std::vector<std::string> hashUnion(const hashTable<T>& src) const;
+        std::vector<std::string> hashDifference(const hashTable<T>& src) const;
     };
 
 #include "hashTable.cpp

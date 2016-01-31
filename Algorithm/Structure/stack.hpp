@@ -16,12 +16,12 @@
 template <class T>
 class stack
     {
-    private:
+    protected:
         listNode<T>* head;
     public:
         stack();
         stack(const stack& src);
-        ~stack();
+        virtual ~stack();
         stack<T>& operator = (const stack<T>& src);
         
         void push(T data);

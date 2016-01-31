@@ -9,26 +9,27 @@
 #ifdef __DEQUE__H
 
 template <class T>
-deque<T>::deque(): head(NULL), tail(NULL)
+deque<T>::deque()
     {
+    this->head = this->tail = NULL;
     }
 
 template <class T>
 deque<T>::deque(const deque& src)
     {
-    if (NULL != sr.head)
+    if (NULL != src.head)
         {
-        head = src.head->cascadeCopy();
-        findTail(head);
+        this->head = src.head->cascadeCopy();
+        findTail(this->head);
         }
     }
 
 template <class T>
 deque<T>::~deque()
     {
-    if (NULL != head)
+    if (NULL != this->head)
         {
-        head->cascadeDelete();
+        this->head->cascadeDelete();
         }
     }
 
@@ -38,15 +39,15 @@ deque<T>& deque<T>::operator =(const deque<T>& src)
     // prevent self assignment
     if (&src != this)
         {
-        if (NULL != head)
+        if (NULL != this->head)
             {
-            head->cascadeDelete();
+            this->head->cascadeDelete();
             }
         
         if (NULL != src.head)
             {
-            head = src.head->cascadeCopy();
-            findTail(head);
+            this->head = src.head->cascadeCopy();
+            findTail(this->head);
             }
         }
     
@@ -55,31 +56,31 @@ deque<T>& deque<T>::operator =(const deque<T>& src)
 
 template <class T>
 void deque<T>::push_back(T data) {
-    tail->next = new biNode<T>(tail, data, NULL);
-    tail = tail->next;
+    this->tail->next = new biNode<T>(this->tail, data, NULL);
+    this->tail = this->tail->next;
 
-    if (NULL == head)
+    if (NULL == this->head)
         {
-        head = tail;
+        this->head = this->tail;
         }
 }
 
 template <class T>
 T deque<T>::pop_front() {
-    if (NULL == head)
+    if (NULL == this->head)
         {
         throw std::runtime_error("removing from empty list");
         }
     
-    T data = head->getData();
-    biNode<T>* buffer = head;
-    if (tail == head)
+    T data = this->head->getData();
+    biNode<T>* buffer = this->head;
+    if (this->tail == this->head)
         {
-        tail = head = NULL;
+        this->tail = this->head = NULL;
         }
     else
         {
-        head = head->next;
+        this->head = this->head->next;
         }
     delete buffer;
 

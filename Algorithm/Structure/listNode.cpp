@@ -11,13 +11,13 @@
 template <class T>
 listNode<T>::listNode(T data) : next(NULL)
     {
-    dataInit(data);
+    this->dataInit(data);
     }
 
 template <class T>
 listNode<T>::listNode(T data, listNode<T>* next) : next(next)
     {
-    dataInit(data);
+    this->dataInit(data);
     }
 
 template <class T>
@@ -33,12 +33,12 @@ void listNode<T>::cascadeDelete()
 template <class T>
 listNode<T>* listNode<T>::cascadeCopy()
     {
-    listNode<T>* copy = new listNode<T>(data);
+    listNode<T>* copy = new listNode<T>(this->data);
     listNode<T>* buffer = copy;
     for (listNode<T>* src = next; NULL != src; src = src->next)
         {
         buffer->next = new listNode<T>(src->getData());
-        buffer = buffer->buffer;
+        buffer = buffer->next;
         }
     return copy;
     }
