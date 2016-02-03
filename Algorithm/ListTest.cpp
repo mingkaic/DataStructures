@@ -26,6 +26,10 @@ int main(int argc, char* argv[])
 
     switch (structure[0])
         {
+        case 'h':
+        case 'H':
+            
+            break;
         case 's':
         case 'S':
             if (false == s.isEmpty())

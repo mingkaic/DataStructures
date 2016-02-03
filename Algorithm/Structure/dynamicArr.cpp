@@ -9,16 +9,17 @@
 #ifdef __DYNAMIC_ARR__H
 
 template <class T>
-dynamicArr<T>::dynamicArr() : currSize(0), allocSize(128)
+dynamicArr<T>::dynamicArr() : allocSize(128)
     {
     array = new T[allocSize];
+    memset(array, 0, sizeof(T)*allocSize);
     }
 
 template <class T>
-dynamicArr<T>::dynamicArr(const dynamicArr &obj) : currSize(obj.currSize), allocSize(obj.allocSize)
+dynamicArr<T>::dynamicArr(const dynamicArr &src) : allocSize(src.allocSize)
     {
     array = new T[allocSize];
-    memcpy(array, obj.array, sizeof(T)*allocSize);
+    memcpy(array, src.array, sizeof(T)*allocSize);
     }
 
 template <class T>
@@ -28,9 +29,23 @@ dynamicArr<T>::~dynamicArr()
     }
 
 template <class T>
+dynamicArr<T>& dynamicArr<T>::operator = (const dynamicArr<T>& src)
+    {
+    if (&src != this)
+        {
+        delete[] array;
+        allocSize = src.allocSize;
+        array = new T[allocSize];
+        memcpy(array, src.array, sizeof(T)*allocSize);
+        }
+    return *this;
+    }
+
+template <class T>
 void dynamicArr<T>::dynamicSize(size_t expand)
     {
     T* newarray = new string*[expand*2];
+    memset(newarray+expand, 0, sizeof(T)*allocSize);
     memcpy(newarray, array, sizeof(T)*allocSize);
     allocSize = expand*2;
     delete[] array;
