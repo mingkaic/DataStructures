@@ -10,13 +10,38 @@
 #ifndef __TREAP__H
 #define __TREAP__H
 
+#include <cstdlib>
+#include <ctime>
 #include "treeNode.hpp"
 
+srand(time(NULL));
+
+template <class T>
+class p_treeNode : public treeNode
+    {
+    private:
+        size_t priority;
+
+    public:
+        p_treeNode<T>* left;
+        p_treeNode<T>* right;
+        p_treeNode<T>* parent;
+        
+        p_treeNode(T data);
+        p_treeNode(p_treeNode<T>* left, T data, p_treeNode<T>* right);
+        virtual ~p_treeNode() {}
+        
+        virtual p_treeNode<T>* cascadeCopy();
+        bool operator < (const p_treeNode& left);
+    };
+
+template <class T>
 class treap
     {
     private:
-        treeNode<signed>* head;
-
+        p_treeNode<T>* root;
+        
+        void rotate(p_treeNode<T>* parent, bool rotLeft);
         treap* split();
         void merge(treap* other);
     public:
@@ -24,8 +49,8 @@ class treap
         ~treap();
 
         // basic self-balancing tree operations
-        void insert();
-        void remove();
+        void insert(T data);
+        T remove();
         signed search(signed key);
 
         // bulk ops
