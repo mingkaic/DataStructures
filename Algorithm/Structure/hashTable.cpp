@@ -8,53 +8,52 @@
 
 #ifdef __HASH_TABLE__H
 
+#include <string>
+
 static const size_t ASCII_SIZE = 256;
 
 template <class T>
-hashTable<T>::hashTable() : indexSize(101), curSize(0)
+hashTable<T>::hashTable() : numBuckets(101), curSize(0)
     {
-    dictionary = new searchList<pair<std::string, T>*>[indexSize];
+    dictionary = new searchList<pair<std::string, T>>[numBuckets];
     }
 
 template <class T>
 hashTable<T>::hashTable(size_t intendedSize) : curSize(0)
     {
-    indexSize = nearestPrime((int)2*intendedSize);
-    dictionary = new searchList<pair<std::string, T>*>[indexSize];
+    numBuckets = nearestPrime((int)2*intendedSize);
+    dictionary = new searchList<pair<std::string, T>>[numBuckets];
     }
 
 template <class T>
-hashTable<T>::hashTable(const hashTable& src) : indexSize(obj.indexSize), curSize(obj.curSize)
+hashTable<T>::hashTable(const hashTable& src) : numBuckets(src.numBuckets), curSize(src.curSize)
     {
-    dictionary = new searchList<pair<std::string, T>*>[indexSize];
-    copy(obj.dictionary);
+    dictionary = new searchList<pair<std::string, T>>[numBuckets];
+    copy(src.dictionary);
     }
 
 template <class T>
 hashTable<T>::~hashTable()
     {
-    for (size_t i = 0; i < indexSize; i++)
+    for (size_t i = 0; i < numBuckets; i++)
         {
-        while (false == dictionary[i].isEmpty())
-            {
-            delete dictionary[i].pop(); // delete all new pairs
-            }
+        ]delete dictionary[i]
         }
     delete[] dictionary;
     }
 
 template <class T>
-hashTable<T>& hashTable<T>::operator = (const hashTable<T>& obj)
+hashTable<T>& hashTable<T>::operator = (const hashTable<T>& src)
     {
-    if (this != &obj)
+    if (this != &src)
         {
-        curSize = obj.curSize;
-        indexSize = obj.indexSize;
+        curSize = src.curSize;
+        numBuckets = src.numBuckets;
 
         delete[] dictionary;
             
-        dictionary = new searchList<pair<std::string, T>*>[indexSize];
-        copy(obj.dictionary);
+        dictionary = new searchList<pair<std::string, T>>[numBuckets];
+        copy(src.dictionary);
         }
     
     return *this;
@@ -65,22 +64,21 @@ T& hashTable<T>::operator [] (std::string key)
     {
     T data;
     size_t hashIndex = hashFunction(key);
-    pair<std::string, T>* p = new pair<std::string, T>(str, data);
+    pair<std::string, T> p;
     signed existingIndex = dictionary[hashIndex].search(p);
     if (existingIndex > -1)
         {
-        delete p;
         return dictionary[hashIndex].nPeek(existingIndex)->getDataRef();
         }
     dictionary[hashIndex].push(p);
-    return p->getDataRef();
+    return p.getDataRef();
     }
 
 template <class T>
 bool hashTable<T>::insert(std::string str, T data)
     {
     bool replaced = false;
-    pair<std::string, T>* p = new pair<std::string, T>(str, data);
+    pair<std::string, T> p;
     size_t hashIndex = hashFunction(str);
     signed existingIndex = dictionary[hashIndex].search(p);
     if (existingIndex > -1)
@@ -101,7 +99,7 @@ bool hashTable<T>::remove(std::string str)
     {
     T data;
     bool removed = false;
-    pair<std::string, T>* p = new pair<std::string, T>(str, data);
+    pair<std::string, T> p;
     size_t hashIndex = hashFunction(str);
     signed existingIndex = dictionary[hashIndex].search(p);
     if (existingIndex > -1)
@@ -110,10 +108,6 @@ bool hashTable<T>::remove(std::string str)
         curSize--;
         removed = true;
         }
-    else
-        {
-        delete p;    
-        }
     return removed;
     }
 
@@ -121,33 +115,32 @@ template <class T>
 bool hashTable<T>::search(std::string str, T& data) const
     {
     size_t hashIndex = hashFunction(str);
-    pair<std::string, T>* p = new pair<std::string, T>(str, data);
+    pair<std::string, T> p;
     signed existingIndex = dictionary[hashIndex].search(p);
     bool found = existingIndex > -1;
     if (true == found)
         {
         data = dictionary[hashIndex].nPeek(existingIndex).getData();
         }
-    delete p;
     return found;
     }
 
 template <class T>
-int hashTable<T>::numInserted() const
+size_t hashTable<T>::numInserted() const
     {
     return curSize;
     }
 
 template <class T>
-int hashTable<T>::numSlot() const
+size_t hashTable<T>::numSlot() const
     {
-    return indexSize;
+    return numBuckets;
     }
 
 template <class T>
 double hashTable<T>::loadFactor() const
     {
-    return (double)curSize/(double)indexSize;
+    return (double)curSize/(double)numBuckets;
     }
 
 template <class T>
@@ -155,9 +148,9 @@ std::vector<std::string> hashTable<T>::hashIntersect(const hashTable<T>& src) co
     {
     std::vector<std::string> joined;
     hashTable<T> copy = src;
-    pair<std::string, T>* buffer;
+    pair<std::string, T> buffer;
 
-    for (size_t i = 0; i < copy.indexSize; i++)
+    for (size_t i = 0; i < copy.numBuckets; i++)
         {
         while (false == copy.dictionary[i].isEmpty())
             {
@@ -178,11 +171,11 @@ std::vector<std::string> hashTable<T>::hashUnion(const hashTable& src) const
     std::vector<std::string> joined;
     hashTable<T> copyThis = *this;
     hashTable<T> copyThat = src;
-    pair<std::string, T>* buffer;
+    pair<std::string, T> buffer;
     size_t hashIndex = 0;
     signed bufferIndex = 0;
 
-    for (size_t i = 0; i < copyThat.indexSize; i++)
+    for (size_t i = 0; i < copyThat.numBuckets; i++)
         {
         while (false == copyThat.dictionary[i].isEmpty())
             {
@@ -197,7 +190,7 @@ std::vector<std::string> hashTable<T>::hashUnion(const hashTable& src) const
             }
         }
         
-    for (size_t i = 0; i < copyThis.indexSize; i++)
+    for (size_t i = 0; i < copyThis.numBuckets; i++)
         {
         while (false == copyThis.dictionary[i].isEmpty())
             {
@@ -210,16 +203,16 @@ std::vector<std::string> hashTable<T>::hashUnion(const hashTable& src) const
     }
 
 template <class T>
-std::vector<std::string> hashTable<T>::hashDifference(const hashTable& obj) const
+std::vector<std::string> hashTable<T>::hashDifference(const hashTable& src) const
     {
     std::vector<std::string> diff;
     hashTable<T> copyThis = *this;
     hashTable<T> copyThat = src;
-    pair<std::string, T>* buffer;
+    pair<std::string, T> buffer;
     size_t hashIndex = 0;
     signed bufferIndex = 0;
 
-    for (size_t i = 0; i < copyThat.indexSize; i++)
+    for (size_t i = 0; i < copyThat.numBuckets; i++)
         {
         while (false == copyThat.dictionary[i].isEmpty())
             {
@@ -237,7 +230,7 @@ std::vector<std::string> hashTable<T>::hashDifference(const hashTable& obj) cons
             }
         }
         
-    for (size_t i = 0; i < copyThis.indexSize; i++)
+    for (size_t i = 0; i < copyThis.numBuckets; i++)
         {
         while (false == copyThis.dictionary[i].isEmpty())
             {
@@ -250,9 +243,9 @@ std::vector<std::string> hashTable<T>::hashDifference(const hashTable& obj) cons
     }
 
 template <class T>
-int hashTable<T>::nearestPrime(int optimus)
+size_t hashTable<T>::nearestPrime(size_t optimus)
     {
-    if (n == 2)
+    if (optimus == 2)
         return 2;
     else if (0 == optimus % 2)
         optimus++;
@@ -264,7 +257,7 @@ int hashTable<T>::nearestPrime(int optimus)
     }
 
 template <class T>
-bool hashTable<T>::isPrime(int n)
+bool hashTable<T>::isPrime(size_t n)
     {
     for (size_t i = 3; i < n/2; i += 2)
         {
@@ -277,26 +270,17 @@ bool hashTable<T>::isPrime(int n)
     }
 
 template <class T>
-void hashTable<T>::copy(listNode<pair<std::string, T>*>* arr)
-    {
-    for (int i = 0; i < indexSize; i++)
-        {
-        dictionary[i] = arr[i];
-        }
-    }
-
-template <class T>
 size_t hashTable<T>::hashFunction(std::string str) const
     {
     // string to index conversion
 	size_t index = 0;
     size_t key = 0;
     
-    for (size_t i = 0; i < =str.size(); i++)
+    for (size_t i = 0; i <= str.size(); i++)
         {
         key = (size_t)str[i];
         
-	    index = (index*ASCII_SIZE+key)%indexSize;
+	    index = (index*ASCII_SIZE+key)%numBuckets;
         }
     
     return index;

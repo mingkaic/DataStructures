@@ -10,7 +10,7 @@
 #ifndef __NODE__H
 #define __NODE__H
 
-// note: use to interface trees as well
+// abstract class
 template <class T>
 class node
     {

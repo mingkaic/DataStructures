@@ -8,8 +8,6 @@
 
 #ifdef __HEAP__H
 
-
-	
 void swap(dynamicArray<T>* arr, size_t index1, size_t index2)
 	{
 	T buffer = arr[index1];

@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Ming Kai Chen. All rights reserved.
 //
 
-ifndef __SEARCH_LIST__H
+#ifndef __SEARCH_LIST__H
 #define __SEARCH_LIST__H
 
 #include "stack.hpp"
 
 template <class T>
-class searchList : public stack
+class searchList : public stack<T>
     {
     public:
         searchList();
@@ -27,6 +27,6 @@ class searchList : public stack
         bool nReplace(T elem, size_t N);
         
         size_t size() const;
-    }
+    };
 
 #endif /* __SEARCH_LIST__H */

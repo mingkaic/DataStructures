@@ -10,14 +10,10 @@
 #ifndef __TREAP__H
 #define __TREAP__H
 
-#include <cstdlib>
-#include <ctime>
 #include "treeNode.hpp"
 
-srand(time(NULL));
-
 template <class T>
-class p_treeNode : public treeNode
+class p_treeNode : public treeNode<T>
     {
     private:
         size_t priority;
@@ -32,7 +28,6 @@ class p_treeNode : public treeNode
         virtual ~p_treeNode() {}
         
         virtual p_treeNode<T>* cascadeCopy();
-        bool operator < (const p_treeNode& left);
     };
 
 template <class T>
@@ -41,6 +36,7 @@ class treap
     private:
         p_treeNode<T>* root;
         
+        p_treeNode<T>* BinSearch(T key, p_treeNode<T>* i_root) const;
         void rotate(p_treeNode<T>* parent, bool rotLeft);
         treap* split();
         void merge(treap* other);
@@ -49,14 +45,17 @@ class treap
         ~treap();
 
         // basic self-balancing tree operations
-        void insert(T data);
-        T remove();
-        signed search(signed key);
+        bool insert(T data);
+        bool remove(T data);
+        T removeTop();
+        bool exists(T data);
 
         // bulk ops
         void tr_union();
         void tr_intersection();
         void tr_difference();
+        
+        p_treeNode<T>* getRoot() {return root;}
     };
 
 #include "treap.cpp"

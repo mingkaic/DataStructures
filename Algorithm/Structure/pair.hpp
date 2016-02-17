@@ -9,31 +9,9 @@
 #ifndef __PAIR__H
 #define __PAIR__H
 
-template <class K, T>
-bool operator == (const pair<K, T>& left, const pair<K, T>& right);
+#include <cstdlib>
 
-template <class K, T>
-bool operator != (const pair<K, T>& left, const pair<K, T>& right);
-
-template <class K, T>
-bool operator > (const pair<K, T>& left, const pair<K, T>& right);
-
-template <class K, T>
-bool operator < (const pair<K, T>& left, const pair<K, T>& right);
-
-template <class K, T>
-bool operator == (const pair<K, T>*& left, const pair<K, T>*& right);
-
-template <class K, T>
-bool operator != (const pair<K, T>*& left, const pair<K, T>*& right);
-
-template <class K, T>
-bool operator > (const pair<K, T>*& left, const pair<K, T>*& right);
-
-template <class K, T>
-bool operator < (const pair<K, T>*& left, const pair<K, T>*& right);
-
-template <class K, T>
+template <class K, class T>
 class pair
     {
     private:
@@ -41,14 +19,38 @@ class pair
         T data;
     public:
         pair(K key, T data);
-        pair(const pair& src);
+        pair(const pair<K,T>& src);
         ~pair();
-        pair& operator = (const pair<T>& src);
+        pair<K,T>& operator = (const pair<K,T>& src);
         
         K getKey();
         T getData();
         T& getDataRef();
     };
+
+template <class K, class T>
+bool operator == (const pair<K, T>& left, const pair<K, T>& right);
+
+template <class K, class T>
+bool operator != (const pair<K, T>& left, const pair<K, T>& right);
+
+template <class K, class T>
+bool operator > (const pair<K, T>& left, const pair<K, T>& right);
+
+template <class K, class T>
+bool operator < (const pair<K, T>& left, const pair<K, T>& right);
+
+template <class K, class T>
+bool operator == (const pair<K, T>*& left, const pair<K, T>*& right);
+
+template <class K, class T>
+bool operator != (const pair<K, T>*& left, const pair<K, T>*& right);
+
+template <class K, class T>
+bool operator > (const pair<K, T>*& left, const pair<K, T>*& right);
+
+template <class K, class T>
+bool operator < (const pair<K, T>*& left, const pair<K, T>*& right);
     
 #include "pair.cpp"
 

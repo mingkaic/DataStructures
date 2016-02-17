@@ -11,27 +11,26 @@
 
 #include "pair.hpp"
 #include "searchList.hpp"
-#include <cstring>
+#include <string>
 #include <vector>
 
 template <class T>
 class hashTable
     {
     private:
-        searchList<pair<std::string, T>*>* dictionary;
+        searchList<pair<std::string, T>>* dictionary;
         size_t curSize;
-        size_t indexSize;
+        size_t numBuckets;
         
-        size_t nearestPrime(int n);
-        bool isPrime(int n);
-        void copy(searchList<pair<std::string, T>*>* srcDict);
+        size_t nearestPrime(size_t n);
+        bool isPrime(size_t n);
         size_t hashFunction(std::string str) const;
     public:
         hashTable();
         hashTable(size_t intendedSize);
         hashTable(const hashTable<T>& src);
         ~hashTable();
-        hashTable& operator = (const hashTable<T>& src);
+        hashTable<T>& operator = (const hashTable<T>& src);
         
         T& operator [] (std::string key);
 
@@ -48,6 +47,6 @@ class hashTable
         std::vector<std::string> hashDifference(const hashTable<T>& src) const;
     };
 
-#include "hashTable.cpp
+#include "hashTable.cpp"
 
 #endif /* __HASH_TABLE__H */
