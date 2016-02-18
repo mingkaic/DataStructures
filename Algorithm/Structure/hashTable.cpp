@@ -15,30 +15,29 @@ static const size_t ASCII_SIZE = 256;
 template <class T>
 hashTable<T>::hashTable() : numBuckets(101), curSize(0)
     {
-    dictionary = new searchList<pair<std::string, T>>[numBuckets];
+    dictionary = new searchList<pair<std::string, T> >[numBuckets];
     }
 
 template <class T>
 hashTable<T>::hashTable(size_t intendedSize) : curSize(0)
     {
     numBuckets = nearestPrime((int)2*intendedSize);
-    dictionary = new searchList<pair<std::string, T>>[numBuckets];
+    dictionary = new searchList<pair<std::string, T> >[numBuckets];
     }
 
 template <class T>
 hashTable<T>::hashTable(const hashTable& src) : numBuckets(src.numBuckets), curSize(src.curSize)
     {
-    dictionary = new searchList<pair<std::string, T>>[numBuckets];
-    copy(src.dictionary);
+    dictionary = new searchList<pair<std::string, T> >[numBuckets];
+    for (size_t i = 0; i < src.numBuckets; i++)
+        {
+        dictionary[i] = src.dictionary[i];
+        }
     }
 
 template <class T>
 hashTable<T>::~hashTable()
     {
-    for (size_t i = 0; i < numBuckets; i++)
-        {
-        ]delete dictionary[i]
-        }
     delete[] dictionary;
     }
 
@@ -52,8 +51,11 @@ hashTable<T>& hashTable<T>::operator = (const hashTable<T>& src)
 
         delete[] dictionary;
             
-        dictionary = new searchList<pair<std::string, T>>[numBuckets];
-        copy(src.dictionary);
+        dictionary = new searchList<pair<std::string, T> >[numBuckets];
+        for (size_t i = 0; i < src.numBuckets; i++)
+            {
+            dictionary[i] = src.dictionary[i];
+            }
         }
     
     return *this;
@@ -64,22 +66,22 @@ T& hashTable<T>::operator [] (std::string key)
     {
     T data;
     size_t hashIndex = hashFunction(key);
-    pair<std::string, T> p;
+    pair<std::string, T> p(key, data);
     signed existingIndex = dictionary[hashIndex].search(p);
     if (existingIndex > -1)
         {
-        return dictionary[hashIndex].nPeek(existingIndex)->getDataRef();
+        return dictionary[hashIndex].nPeek(existingIndex).getDataRef();
         }
     dictionary[hashIndex].push(p);
     return p.getDataRef();
     }
 
 template <class T>
-bool hashTable<T>::insert(std::string str, T data)
+bool hashTable<T>::insert(std::string key, T data)
     {
     bool replaced = false;
-    pair<std::string, T> p;
-    size_t hashIndex = hashFunction(str);
+    pair<std::string, T> p(key, data);
+    size_t hashIndex = hashFunction(key);
     signed existingIndex = dictionary[hashIndex].search(p);
     if (existingIndex > -1)
         {
@@ -95,13 +97,12 @@ bool hashTable<T>::insert(std::string str, T data)
     }
 
 template <class T>
-bool hashTable<T>::remove(std::string str)
+bool hashTable<T>::remove(std::string key)
     {
-    T data;
     bool removed = false;
-    pair<std::string, T> p;
-    size_t hashIndex = hashFunction(str);
-    signed existingIndex = dictionary[hashIndex].search(p);
+    pair<std::string, T> p(key, data);
+    size_t hashIndex = hashFunction(key);
+    signed existingIndex = dictionary[hashIndex].search(key);
     if (existingIndex > -1)
         {
         dictionary[hashIndex].nRemove(existingIndex);
@@ -112,10 +113,10 @@ bool hashTable<T>::remove(std::string str)
     }
 
 template <class T>
-bool hashTable<T>::search(std::string str, T& data) const
+bool hashTable<T>::search(std::string key, T& data) const
     {
-    size_t hashIndex = hashFunction(str);
-    pair<std::string, T> p;
+    size_t hashIndex = hashFunction(key);
+    pair<std::string, T> p(key, data);
     signed existingIndex = dictionary[hashIndex].search(p);
     bool found = existingIndex > -1;
     if (true == found)
@@ -157,7 +158,7 @@ std::vector<std::string> hashTable<T>::hashIntersect(const hashTable<T>& src) co
             buffer = copy.dictionary[i].pop();
             if (-1 < dictionary[hashFunction(buffer->getKey())].search(buffer))
                 {
-                joined.push_back(buffer->getKey());
+                joined.push_back(buffer.getKey());
                 }
             }
         }
@@ -270,17 +271,17 @@ bool hashTable<T>::isPrime(size_t n)
     }
 
 template <class T>
-size_t hashTable<T>::hashFunction(std::string str) const
+size_t hashTable<T>::hashFunction(std::string key) const
     {
     // string to index conversion
 	size_t index = 0;
-    size_t key = 0;
+    size_t keyValue = 0;
     
-    for (size_t i = 0; i <= str.size(); i++)
+    for (size_t i = 0; i <= key.size(); i++)
         {
-        key = (size_t)str[i];
+        keyValue = (size_t)key[i];
         
-	    index = (index*ASCII_SIZE+key)%numBuckets;
+	    index = (index*ASCII_SIZE+keyValue)%numBuckets;
         }
     
     return index;

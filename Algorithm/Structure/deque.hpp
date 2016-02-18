@@ -10,7 +10,6 @@
 #ifndef __DEQUE__H
 #define __DEQUE__H
 
-#include <stdexcept>
 #include "queue.hpp"
 
 // Double ended queue (throw error handle behavior with remove on empty)

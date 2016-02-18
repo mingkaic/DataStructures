@@ -8,11 +8,44 @@
 
 #ifdef __HEAP__H
 
-void swap(dynamicArray<T>* arr, size_t index1, size_t index2)
+#include <stdexcept>
+#include "dynamicArr.hpp"
+#include "genericHandles.hpp"
+
+template <class T>
+void swap(dynamicArr<T>* arr, size_t index1, size_t index2)
 	{
 	T buffer = arr[index1];
 	arr[index1] = arr[index2];
 	arr[index2] = buffer;
+	}
+	
+// assumes treeArr at index violates heap property (min heap in this case)
+template <class T>
+void heap<T>::reheap(size_t index)
+	{
+	// bubble up
+	for (size_t p = (index-1)/2; index > 0 && treeArr[index] < treeArr[p]; p = (index-1)/2)
+		{
+		swap(treeArr, p, index);
+		index = p;
+		}
+	// bubble down
+	for (size_t left = index*2+1, right = index*2+2;
+		treeArr[index] > treeArr[left] || treeArr[index] > treeArr[right];
+		left = index*2+1, right = index*2+2)
+		{
+		if (treeArr[left] < treeArr[right])
+			{
+			swap(treeArr, left, index);
+			index = left;
+			}
+		else
+			{
+			swap(treeArr, right, index);
+			index = right;
+			}
+		}
 	}
 	
 template <class T>
@@ -46,47 +79,77 @@ template <class T>
 void heap<T>::insert(T data)
 	{
 	T buffer;
-	size_t c = currSize, p = (c-1)/2;
-	treeArr[c] = data;
-	while (c > 0 && treeArr[c] < treeArr[p])
-		{
-		swap(treeArr, c, p);
-		c = p;
-		p = (c-1)/2;
-		}
-	currSize++;
+	treeArr[currSize++] = data;
+	reheap(currSize-1);
 	}
 	
 template <class T>
 T heap<T>::extract()
 	{
-	size_t i = 0, left = 1, right = 2;
-	T data = treeArr[i];
-	treeArr[i] = treeArr[currSize];
-	treeArr[currSize--] = (T) 0;
-	while (treeArr[i] < treeArr[left] ||
-			treeArr[i] < treeArr[right])
+	if (0 == currSize)
 		{
-		if (treeArr[left] > treeArr[right])
-			{
-			swap(treeArr, left, i);
-			i = left;
-			}
-		else
-			{
-			swap(treeArr, right, i);
-			i = right;
-			}
-		left = 2*i+1;
-		right = 2*i+2;
+        throw std::runtime_error("removing from empty heap"); 
 		}
+	T data = treeArr[0];
+	swap(treeArr, 0, currSize-1);
+	g_delete(treeArr[--currSize]);
+	reheap(0);
 	return data;
 	}
 	
 template <class T>
 T heap<T>::peek()
 	{
+	if (0 == currSize)
+		{
+        throw std::runtime_error("peeking in empty heap"); 
+		}
 	return treeArr[0];
+	}
+
+template <class T>
+bool heap<T>::remove(T data, bool (*eqCb)(const T&, const T&))
+	{
+	bool dataRemoved = false;
+	
+	signed i = treeArr.indexOf(data, eqCb);
+		
+	if (i > 0) // assert that i < currSize
+		{
+		dataRemoved = true;
+		swap(treeArr, i, currSize);
+		g_delete(treeArr[--currSize]);
+		reheap(i);
+		}
+	
+	return dataRemoved;
+	}
+
+template <class T>
+bool heap<T>::exists(T& data, bool (*eqCb)(const T&, const T&))
+	{
+	bool dataFound = false;
+	
+	signed i = treeArr.indexOf(data, eqCb);
+		
+	if (i > 0) // assert that i < currSize
+		{
+		dataFound = true;
+		data = treeArr[i];
+		}
+	
+	return dataFound;
+	}
+
+template <class T>
+void heap<T>::modified(T data, bool (*eqCb)(const T&, const T&))
+	{
+	signed i = treeArr.indexOf(data, eqCb);
+		
+	if (i > 0) // assert that i < currSize
+		{
+		reheap(i);
+		}
 	}
 
 #endif /* __HEAP__H */

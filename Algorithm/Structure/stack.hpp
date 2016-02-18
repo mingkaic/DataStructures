@@ -10,7 +10,6 @@
 #ifndef __STACK__H
 #define __STACK__H
 
-#include <stdexcept>
 #include "listNode.hpp"
 
 template <class T>

@@ -8,6 +8,8 @@
 
 #ifdef __STACK__H
 
+#include <stdexcept>
+
 template <class T>
 stack<T>::stack(): head(NULL)
     {

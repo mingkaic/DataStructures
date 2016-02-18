@@ -6,17 +6,23 @@
 //  Copyright (c) 2014 Ming Kai Chen. All rights reserved.
 //
 
+#pragma once
 #ifndef __HEAP__H
 #define __HEAP__H
 
-#include "dynamicArray.hpp"
+#include "dynamicArr.hpp"
+#include "iterator.hpp"
+#include "genericHandles.hpp"
 
+// current implementation: min heap
 template <class T>
 class heap
 	{
 	private:
-		dynamicArray<T> treeArr;
+		dynamicArr<T> treeArr;
 		size_t currSize;
+		
+		void reheap(size_t index);
 	public:
 		heap();
 		heap(const heap<T>& src);
@@ -26,8 +32,16 @@ class heap
 		void insert(T data);
 		T extract();
 		T peek();
-	}
-    
+		
+		bool remove(T data, bool (*eqCb)(const T&, const T&) = &genericEquality);
+		
+		// at the mercy of the user. praise be the lord
+		// data is reference. can break heap property
+		bool exists(T& data, bool (*eqCb)(const T&, const T&) = &genericEquality);
+		// use if re-heaping is necessary
+		void modified(T data, bool (*eqCb)(const T&, const T&) = &genericEquality);
+	};
+	
 #include "heap.cpp"
 
 #endif /* __HEAP__H */

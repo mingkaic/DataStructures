@@ -44,12 +44,13 @@ dynamicArr<T>& dynamicArr<T>::operator = (const dynamicArr<T>& src)
 template <class T>
 void dynamicArr<T>::dynamicSize(size_t expand)
     {
-    T* newarray = new string*[expand*2];
-    memset(newarray+expand, 0, sizeof(T)*allocSize);
-    memcpy(newarray, array, sizeof(T)*allocSize);
-    allocSize = expand*2;
+    size_t newSize = allocSize*expand;
+    T* newarray = new T[newSize];
+    memset(newarray+newSize-allocSize, 0, sizeof(T)*(newSize-allocSize));
+    memcpy(newarray, array, sizeof(T)*newSize);
     delete[] array;
     array = newarray;
+    allocSize = newSize;
     }
     
 template <class T>
@@ -64,10 +65,10 @@ T& dynamicArr<T>::operator [] (size_t index)
     }
 
 template <class T>
-signed dynamicArr<T>::indexOf(T elem) const
+signed dynamicArr<T>::indexOf(T elem, bool (*eqCb)(const T&, const T&)) const
     {
-    signed index = 0
-    while (index < allocSize && array[index] != elem)
+    signed index = 0;
+    while (index < allocSize && false == eqCb(array[index], elem))
         {
         index++;
         }

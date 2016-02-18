@@ -8,6 +8,8 @@
 
 #ifdef __QUEUE__H
 
+#include <stdexcept>
+
 template <class T>
 void queue<T>::findTail(biNode<T>* n)
     {

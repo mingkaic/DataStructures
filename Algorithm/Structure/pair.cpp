@@ -9,69 +9,8 @@
 #ifdef __PAIR__H
 
 template <class K, class T>
-bool operator == (const pair<K, T>& left, const pair<K, T>& right)
+pair<K, T>::pair(K key) : key(key)
     {
-    return left.key == right.key;
-    }
-
-template <class K, class T>
-bool operator == (const pair<K, T>*& left, const pair<K, T>*& right)
-    {
-    return left->key == right->key;
-    }
-    
-template <class K, class T>
-bool operator != (const pair<K, T>& left, const pair<K, T>& right)
-    {
-    return left.key != right.key;
-    }
-
-template <class K, class T>
-bool operator != (const pair<K, T>*& left, const pair<K, T>*& right)
-    {
-    return left->key != right->key;
-    }
-
-template <class K, class T>
-bool operator > (const pair<K, T>& left, const pair<K, T>& right)
-    {
-    return left.key > right.key;
-    }
-
-template <class K, class T>
-bool operator > (const pair<K, T>*& left, const pair<K, T>*& right)
-    {
-    bool bigLeft = false;
-    if (NULL == right)
-        {
-        bigLeft = true;
-        }
-    else if (NULL != left)
-        {
-        bigLeft = left->key > right->key;
-        }
-    return bigLeft;
-    }
-
-template <class K, class T>
-bool operator < (const pair<K, T>& left, const pair<K, T>& right)
-    {
-    return left.key < right.key;
-    }
-
-template <class K, class T>
-bool operator < (const pair<K, T>*& left, const pair<K, T>*& right)
-    {
-    bool smallLeft = true;
-    if (NULL == right)
-        {
-        smallLeft = false;
-        }
-    else if (NULL != left)
-        {
-        smallLeft = left->key < right->key;
-        }
-    return smallLeft;
     }
 
 template <class K, class T>
@@ -92,8 +31,12 @@ pair<K, T>::~pair()
 template <class K, class T>
 pair<K, T>& pair<K, T>::operator = (const pair<K, T>& src)
     {
-    key = src.key;
-    data = src.data;
+	if (this != &src)
+		{
+        key = src.key;
+        data = src.data;
+		}
+	return *this;
     }
 
 template <class K, class T>
@@ -112,6 +55,54 @@ template <class K, class T>
 T& pair<K, T>::getDataRef()
     {
     return data;
+    }
+    
+template <class K, class T>
+bool operator == (const pair<K, T>& left, const pair<K, T>& right)
+    {
+    return left.key == right.key;
+    }
+
+template <class K, class T>
+bool operator == (const K& left, const pair<K, T>& right)
+    {
+    return left == right.key;
+    }
+
+template <class K, class T>
+bool operator == (const pair<K, T>& left, const K& right)
+    {
+    return left.key == right;
+    }
+    
+template <class K, class T>
+bool operator != (const pair<K, T>& left, const pair<K, T>& right)
+    {
+    return left.key != right.key;
+    }
+
+template <class K, class T>
+bool operator != (const K& left, const pair<K, T>& right)
+    {
+    return left != right.key;
+    }
+
+template <class K, class T>
+bool operator != (const pair<K, T>& left, const K& right)
+    {
+    return left.key != right;
+    }
+
+template <class K, class T>
+bool operator > (const pair<K, T>& left, const pair<K, T>& right)
+    {
+    return left.key > right.key;
+    }
+
+template <class K, class T>
+bool operator < (const pair<K, T>& left, const pair<K, T>& right)
+    {
+    return left.key < right.key;
     }
 
 #endif /* __PAIR__H */

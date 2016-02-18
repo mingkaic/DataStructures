@@ -1,0 +1,38 @@
+---------------------------------
+|       Data containers:        |
+---------------------------------
+node (abstract)
+    |----listNode
+    |----biNode
+    |----treeNode
+    |       |----RBNode (RBTree file)
+
+comparable
+pair
+priorityContainer
+---------------------------------
+|           Trees:              |
+---------------------------------
+BSTree > contains > treeNode
+heap > contains > dynamicArr
+RBTree > contains > RBNode
+treap
+
+---------------------------------
+|           List:               |
+---------------------------------
+stack
+    |----searchList
+queue
+    |----deque
+dynamicArr
+hashTable > contains > searchList
+
+---------------------------------
+|           Others:             |
+---------------------------------
+genericHandles
+graph
+hashheap
+iterator
+smartPtr

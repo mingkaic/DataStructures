@@ -10,6 +10,7 @@
 #ifndef __BI_NODE__H
 #define __BI_NODE__H
 
+#include <cstdlib>
 #include "node.hpp"
 
 // doubly linked node

@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Ming Kai Chen. All rights reserved.
 //
 
+#pragma once
 #ifndef __PAIR__H
 #define __PAIR__H
 
@@ -18,6 +19,7 @@ class pair
         K key;
         T data;
     public:
+        pair(K key); // used for key checking
         pair(K key, T data);
         pair(const pair<K,T>& src);
         ~pair();
@@ -32,25 +34,25 @@ template <class K, class T>
 bool operator == (const pair<K, T>& left, const pair<K, T>& right);
 
 template <class K, class T>
+bool operator == (const K& left, const pair<K, T>& right);
+
+template <class K, class T>
+bool operator == (const pair<K, T>& left, const K& right);
+
+template <class K, class T>
 bool operator != (const pair<K, T>& left, const pair<K, T>& right);
+
+template <class K, class T>
+bool operator != (const K& left, const pair<K, T>& right);
+
+template <class K, class T>
+bool operator != (const pair<K, T>& left, const K& right);
 
 template <class K, class T>
 bool operator > (const pair<K, T>& left, const pair<K, T>& right);
 
 template <class K, class T>
 bool operator < (const pair<K, T>& left, const pair<K, T>& right);
-
-template <class K, class T>
-bool operator == (const pair<K, T>*& left, const pair<K, T>*& right);
-
-template <class K, class T>
-bool operator != (const pair<K, T>*& left, const pair<K, T>*& right);
-
-template <class K, class T>
-bool operator > (const pair<K, T>*& left, const pair<K, T>*& right);
-
-template <class K, class T>
-bool operator < (const pair<K, T>*& left, const pair<K, T>*& right);
     
 #include "pair.cpp"
 

@@ -18,7 +18,7 @@ template <class T>
 class hashTable
     {
     private:
-        searchList<pair<std::string, T>>* dictionary;
+        searchList<pair<std::string, T> >* dictionary;
         size_t curSize;
         size_t numBuckets;
         

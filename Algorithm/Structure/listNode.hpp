@@ -10,6 +10,7 @@
 #ifndef __LIST_NODE__H
 #define __LIST_NODE__H
 
+#include <cstdlib>
 #include "node.hpp"
 
 template <class T>

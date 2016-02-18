@@ -8,6 +8,8 @@
 
 #ifdef __DEQUE__H
 
+#include <stdexcept>
+
 template <class T>
 deque<T>::deque()
     {
