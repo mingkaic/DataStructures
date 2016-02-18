@@ -10,22 +10,22 @@
 #ifndef __LIST_NODE__H
 #define __LIST_NODE__H
 
-#include <cstdlib>
 #include "node.hpp"
 
 template <class T>
 class listNode : public node<T>
     {
+    protected:
+        listNode<T>(){next = NULL;}
     public:
         listNode<T>* next;
         
         listNode(T data);
         listNode(T data, listNode<T>* next);
-        // shallow copying data right now. no worries
         virtual ~listNode() {}
         
         void cascadeDelete();
-        listNode<T>* cascadeCopy();
+        virtual listNode<T>* cascadeCopy();
     };
 
 #include "listNode.cpp"

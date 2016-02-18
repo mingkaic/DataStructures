@@ -6,6 +6,7 @@
 //
 //
 
+#pragma once
 #ifndef __SKIP_LIST__H
 #define __SKIP_LIST__H
 

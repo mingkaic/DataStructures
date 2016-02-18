@@ -46,6 +46,12 @@ K pair<K, T>::getKey()
     }
 
 template <class K, class T>
+K& pair<K, T>::getKeyRef()
+    {
+    return key;
+    }
+
+template <class K, class T>
 T pair<K, T>::getData()
     {
     return data;

@@ -10,7 +10,7 @@
 #ifndef __HASH_HEAP__H
 #define __HASH_HEAP__H
 
-#include <cstring>
+#include <string>
 #include "priorityContainer.hpp"
 #include "heap.hpp"
 #include "pair.hpp"

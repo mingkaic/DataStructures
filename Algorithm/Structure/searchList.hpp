@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Ming Kai Chen. All rights reserved.
 //
 
+#pragma once
 #ifndef __SEARCH_LIST__H
 #define __SEARCH_LIST__H
 

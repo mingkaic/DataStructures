@@ -8,6 +8,9 @@
 
 #ifdef __BSTREE__H
 
+#include <cstdlib>
+#include "treeNode.hpp"
+
 template <class T>
 treeNode<T>* BSTree<T>::BinSearch(T key, treeNode<T>* i_root) const
     {
@@ -63,7 +66,7 @@ BSTree<T>::BSTree() : root(NULL)
     }
 
 template <class T>
-BSTree<T>::BSTree(const BSTree<T>& src)
+BSTree<T>::BSTree(const BSTree<T>& src) : root(NULL)
     {
     if (NULL != src.root)
         {

@@ -9,43 +9,11 @@
 #ifdef __TREAP__H
 
 #include <cstdlib>
-#include <ctime>
+#include "pTreeNode.hpp"
+#include "priorityContainer.hpp"
 
 template <class T>
-p_treeNode<T>::p_treeNode(T data) :
-left(NULL), right(NULL), parent(NULL)
-    {
-    this->dataInit(data);
-    priority = rand();
-    }
-
-template <class T>
-p_treeNode<T>::p_treeNode(p_treeNode<T>* left, T data, p_treeNode<T>* right) :
-left(left), right(right), parent(NULL)
-    {
-    this->dataInit(data);
-    priority = rand();
-    }
-        
-template <class T>
-p_treeNode<T>* p_treeNode<T>::cascadeCopy()
-    {
-    p_treeNode<T>* copy = new p_treeNode<T>(this->data);
-    if (NULL != left)
-        {
-        copy->left = left->cascadeCopy();
-        copy->left->parent = copy;
-        }
-    if (NULL != right)
-        {
-        copy->right = right->cascadeCopy();
-        copy->right->parent = copy;
-        }
-    return copy;
-    }
-
-template <class T>
-bool operator < (const p_treeNode<T>* left, const p_treeNode<T>* right)
+bool operator < (const pTreeNode<priorityContainer<T> >* left, const pTreeNode<priorityContainer<T> >* right)
     {
     bool smallLeft = true;
     if (NULL == right)
@@ -54,13 +22,13 @@ bool operator < (const p_treeNode<T>* left, const p_treeNode<T>* right)
         }
     else if (NULL != left)
         {
-        smallLeft = left->priority < right->priority;
+        smallLeft = left->getData() < right->getData();
         }
     return smallLeft;
     }
 
 template <class T>
-bool operator > (const p_treeNode<T>* left, const p_treeNode<T>* right)
+bool operator > (const pTreeNode<priorityContainer<T> >* left, const pTreeNode<priorityContainer<T> >* right)
     {
     bool bigLeft = false;
     if (NULL == right)
@@ -69,44 +37,15 @@ bool operator > (const p_treeNode<T>* left, const p_treeNode<T>* right)
         }
     else if (NULL != left)
         {
-        bigLeft = left->priority > right->priority;
+        bigLeft = left->getData() > right->getData();
         }
     return bigLeft;
     }
 
 template <class T>
-p_treeNode<T>* treap<T>::BinSearch(T key, p_treeNode<T>* i_root) const
+void treap<T>::rotate(pTreeNode<priorityContainer<T> >* parent, bool rotLeft)
     {
-    p_treeNode<T>* parent;
-    p_treeNode<T>* child;
-    parent = child = i_root;
-
-    while(NULL != child)
-        {
-        if (child->getData() == key)
-            {
-            child = NULL;
-            }
-        else 
-            {
-            parent = child;
-            if (child->getData() > key)
-                {
-                child = child->left;
-                }
-            else
-                {
-                child = child->right;
-                }
-            }
-        }
-    return parent;
-    }
-
-template <class T>
-void treap<T>::rotate(p_treeNode<T>* parent, bool rotLeft)
-    {
-    p_treeNode<T>* child;
+    pTreeNode<priorityContainer<T> >* child;
     if (true == rotLeft)
         {
         child = parent->right;
@@ -144,9 +83,9 @@ void treap<T>::rotate(p_treeNode<T>* parent, bool rotLeft)
         }
     parent->parent = child;
     // rotation fixup
-    if (root == parent)
+    if (this->root == parent)
         {
-        root = child;
+        this->root = child;
         }
     }
 
@@ -161,29 +100,30 @@ void treap<T>::merge(treap<T>* other)
     }
 
 template <class T>
-treap<T>::treap() : root (NULL)
+treap<T>::treap(const treap<T>& src) : pBSTree<priorityContainer<T> >(src)
     {
     }
 
 template <class T>
-treap<T>::~treap()
+treap<T>& treap<T>::operator = (const treap<T>& src)
     {
-    root->cascadeDelete();
+    pBSTree<priorityContainer<T> >::operator = (src);
+    return *this;
     }
 
 template <class T>
 bool treap<T>::insert(T data)
     {
     bool unique = true;
-    p_treeNode<T>* parent = BinSearch(data, root);
+    pTreeNode<priorityContainer<T> >* parent = BinSearch(data, this->root);
     if (NULL == parent)
         {
-        root = new p_treeNode<T>(data);
+        this->root = new pTreeNode<priorityContainer<T> >(data);
         }
     else
         {
         bool isLeft = parent->getData() > data;
-        p_treeNode<T>* child = isLeft ? parent->left : parent->right;
+        pTreeNode<priorityContainer<T> >* child = isLeft ? parent->left : parent->right;
         if (NULL != child || parent->getData() == data)
             {
             unique = false;
@@ -192,11 +132,11 @@ bool treap<T>::insert(T data)
             {
             if (isLeft)
                 {
-                child = parent->left = new p_treeNode<T>(data);
+                child = parent->left = new pTreeNode<priorityContainer<T> >(data);
                 }
             else
                 {
-                child = parent->right = new p_treeNode<T>(data);
+                child = parent->right = new pTreeNode<priorityContainer<T> >(data);
                 }
             while (child < parent)
                 {
@@ -217,7 +157,7 @@ bool treap<T>::remove(T data)
     {
     bool found = true;
     
-    p_treeNode<T>* target = BinSearch(data, root);
+    pTreeNode<priorityContainer<T> >* target = BinSearch(data, this->root);
     if (target->getData() != data)
         {
         found = false;
@@ -225,11 +165,11 @@ bool treap<T>::remove(T data)
     else
         {
         bool isLeft = target->left > target->right;
-        p_treeNode<T>* child = isLeft ? target->left : target->right;
-        p_treeNode<T>* buffer = isLeft ? target->right : target->left;
-        if (root == target)
+        pTreeNode<priorityContainer<T> >* child = isLeft ? target->left : target->right;
+        pTreeNode<priorityContainer<T> >* buffer = isLeft ? target->right : target->left;
+        if (this->root == target)
             {
-            root = child;
+            this->root = child;
             }
         while (NULL != child || NULL != buffer)
             {
@@ -257,27 +197,8 @@ bool treap<T>::remove(T data)
 template <class T>
 T treap<T>::removeTop()
     {
-    T data = root->getData();
+    T data = this->root->getData();
     return data;
-    }
-
-template <class T>
-bool treap<T>::exists(T data)
-    {
-    p_treeNode<T>* buffer = root;
-    while (NULL != buffer && buffer->getData() != data)
-        {
-        if (buffer->getData() < data)
-            {
-            buffer = buffer->left;
-            }
-        else
-            {
-            buffer = buffer->right;
-            }
-        }
-    
-    return NULL != buffer;
     }
 
 template <class T>

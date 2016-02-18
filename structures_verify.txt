@@ -2,9 +2,12 @@
 |       Data containers:        |
 ---------------------------------
 node (abstract)
-    |----listNode
-    |----biNode
-    |----treeNode
+    |----listNode (singly linked node)
+    |----biNode (doubly linked node)
+    |----skipNode (Nary linked list node) (skipList file)
+    |
+    |----treeNode (doubly linked tree node)
+    |----pTreeNode (parented doubly linked tree node)
     |       |----RBNode (RBTree file)
 
 comparable
@@ -14,19 +17,21 @@ priorityContainer
 |           Trees:              |
 ---------------------------------
 BSTree > contains > treeNode
+pBSTree > contains > pTreeNode
+	|----RBTree > contains > pTreeNode containing a pair of bool and data (revise to tuple later on)
+	|----treap > contains > pTreeNode containing a priorityContainer
 heap > contains > dynamicArr
-RBTree > contains > RBNode
-treap
 
 ---------------------------------
 |           List:               |
 ---------------------------------
 stack
     |----searchList
-queue
+queue > contains > biNode
     |----deque
 dynamicArr
 hashTable > contains > searchList
+skipList
 
 ---------------------------------
 |           Others:             |

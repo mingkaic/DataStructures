@@ -26,6 +26,7 @@ class pair
         pair<K,T>& operator = (const pair<K,T>& src);
         
         K getKey();
+        K& getKeyRef();
         T getData();
         T& getDataRef();
     };

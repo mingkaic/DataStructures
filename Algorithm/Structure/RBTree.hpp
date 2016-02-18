@@ -10,48 +10,28 @@
 #ifndef __RB_TREE__H
 #define __RB_TREE__H
 #include <iostream>
-#include <cstdlib>
-#include <stdexcept>
-#include "BSTree.hpp"
+#include "pair.hpp"
+#include "pBSTree.hpp"
 
 template <class T>
-class RBNode : public treeNode<T>
+bool& isBlack(pTreeNode<pair<bool, T> >* rb_node)
     {
-    public:
-        bool isBlack;
-        RBNode<T>* left;
-        RBNode<T>* right;
-        RBNode<T>* parent;
-
-        RBNode(T data);
-        RBNode(T data, bool isBlack);
-        RBNode(RBNode<T>* left, T data, RBNode<T>* right);
-        
-        void cascadeDelete();
-        RBNode<T>* cascadeCopy();
-    };
+    return rb_node->getDataRef()->getKeyRef();
+    }
 
 template <class T>
-class RBTree
+class RBTree : public pBSTree<pair<bool, T> >
     {
     private:
-        RBNode<T>* root;
-        void deleteFixUp(RBNode<T>* parent, bool childIsLeft);
-        void rotate(RBNode<T>* parent, bool rotateLeft);
-        RBNode<T>* successor(RBNode<T>* i_root);
-        // gets exact match if key found, closest match otherwise
-        RBNode<T>* BinSearch(T key, RBNode<T>* root) const;
+        void deleteFixUp(pTreeNode<pair<bool, T> >* parent, bool childIsLeft);
+        void rotate(pTreeNode<pair<bool, T> >* parent, bool rotateLeft);
     public:
-        RBTree();
         RBTree(const RBTree<T>& src);
-        virtual ~RBTree();
+        virtual ~RBTree() {} // parent takes care of it
         RBTree<T>& operator = (const RBTree<T>& src);
 
         bool insert(T key);
         bool remove(T key);
-        bool exists(T key);
-        
-        RBNode<T>* getRoot() {return root;}
     };
 
 #include "RBTree.cpp"

@@ -10,29 +10,24 @@
 #ifndef __TREE_NODE__H
 #define __TREE_NODE__H
 
-#include "biNode.hpp"
+#include "node.hpp"
 
 template <class T>
-class treeNode : public biNode<T>
+class treeNode : public node<T>
     {
     protected:
-        treeNode() // for derived classes
-            {
-            left = NULL;
-            right = NULL;
-            }
+        treeNode(){left = right = NULL;}
     public:
         treeNode<T>* left;
         treeNode<T>* right;
         
         treeNode(T data);
-        treeNode(treeNode<T>* left, T data, treeNode<T>* right);
         virtual ~treeNode() {}
         
         void cascadeDelete();
         virtual treeNode<T>* cascadeCopy();
 
-        void injectData(T data);
+        void injectData(T data) {this->dataInit(data);}
     };
 
 #include "treeNode.cpp"

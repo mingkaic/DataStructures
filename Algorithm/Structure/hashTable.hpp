@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Ming Kai Chen. All rights reserved.
 //
 
+#pragma once
 #ifndef __HASH_TABLE__H
 #define __HASH_TABLE__H
 

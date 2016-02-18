@@ -12,26 +12,23 @@
 
 #include <cstdlib>
 #include "node.hpp"
+#include "genericHandles.hpp"
 
 // doubly linked node
 template <class T>
 class biNode : public node<T>
     {
     protected:
-        biNode()
-            {
-            left = NULL;
-            right = NULL;
-            } // for derived classes
+        biNode(){prev = next = NULL;}
     public:
-        biNode<T>* left;
-        biNode<T>* right;
+        biNode<T>* prev;
+        biNode<T>* next;
         
         biNode(T data);
-        biNode(biNode<T>* left, T data, biNode<T>* right);
-        virtual ~biNode() {} // shallow copying data right now. no worries
-        
-        virtual void cascadeDelete();
+        biNode(biNode<T>* prev, T data, biNode<T>* next);
+        virtual ~biNode() {}
+
+        void cascadeDelete();
         virtual biNode<T>* cascadeCopy();
     };
 

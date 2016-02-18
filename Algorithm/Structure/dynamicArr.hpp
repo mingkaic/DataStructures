@@ -10,7 +10,7 @@
 #ifndef __DYNAMIC_ARR__H
 #define __DYNAMIC_ARR__H
 
-#include <cstring>
+#include <string>
 #include "genericHandles.hpp"
 
 template <class T>

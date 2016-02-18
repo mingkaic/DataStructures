@@ -8,21 +8,10 @@
 
 #ifdef __TREE_NODE__H
 
-template <class T>
-void treeNode<T>::injectData(T data)
-    {
-    this->data = data; // simple shallow copy
-    }
+#include <cstdlib>
 
 template <class T>
 treeNode<T>::treeNode(T data)
-    {
-    this->dataInit(data);
-    this->left = this->right = NULL;
-    }
-
-template <class T>
-treeNode<T>::treeNode(treeNode<T>* left, T data, treeNode<T>* right)
     {
     this->dataInit(data);
     this->left = this->right = NULL;

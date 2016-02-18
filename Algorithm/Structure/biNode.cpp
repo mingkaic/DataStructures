@@ -9,15 +9,14 @@
 #ifdef __BI_NODE__H
 
 template <class T>
-biNode<T>::biNode(T data) :
-left(NULL), right(NULL)
+biNode<T>::biNode(T data) : prev(NULL), next(NULL)
     {
     this->dataInit(data);
     }
 
 template <class T>
-biNode<T>::biNode(biNode<T>* left, T data, biNode<T>* right) :
-left(left), right(right)
+biNode<T>::biNode(biNode<T>* prev, T data, biNode<T>* next) :
+prev(prev), next(next)
     {
     this->dataInit(data);
     }
@@ -26,16 +25,16 @@ template <class T>
 void biNode<T>::cascadeDelete()
     {
     biNode<T>* buffer = NULL;
-    while (NULL != left)
+    while (NULL != prev)
         {
-        buffer = left;
-        left = left->left;
+        buffer = prev;
+        prev = prev->prev;
         delete buffer;
         }
-    while (NULL != right)
+    while (NULL != next)
         {
-        buffer = right;
-        right = right->right;
+        buffer = next;
+        next = next->next;
         delete buffer;
         }
     delete this;
@@ -46,16 +45,16 @@ biNode<T>* biNode<T>::cascadeCopy()
     {
     biNode<T>* copy = new biNode<T>(this->data);
     biNode<T>* buffer = copy;
-    for (biNode<T>* src = left; NULL != src; src = src->left)
+    for (biNode<T>* src = prev; NULL != src; src = src->prev)
         {
-        buffer->left = new biNode<T>(buffer, src->getData(), NULL);
-        buffer = buffer->left;
+        buffer->prev = new biNode<T>(buffer, src->getData(), NULL);
+        buffer = buffer->prev;
         }
     buffer = copy;
-    for (biNode<T>* src = right; NULL != src; src = src->right)
+    for (biNode<T>* src = next; NULL != src; src = src->next)
         {
-        buffer->right = new biNode<T>(NULL, src->getData(), buffer);
-        buffer = buffer->right;
+        buffer->next = new biNode<T>(NULL, src->getData(), buffer);
+        buffer = buffer->next;
         }
     return copy;
     }

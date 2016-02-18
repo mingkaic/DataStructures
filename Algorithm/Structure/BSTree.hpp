@@ -1,5 +1,5 @@
 //
-//  BSTree.h
+//  BSTree.hpp
 //  Tree
 //
 //  Created by Mingkai Chen on 2016-01-18.
@@ -10,7 +10,7 @@
 #ifndef __BSTREE__H
 #define __BSTREE__H
 
-#include "TreeNode.hpp"
+#include "treeNode.hpp"
 
 template <class T>
 class BSTree
