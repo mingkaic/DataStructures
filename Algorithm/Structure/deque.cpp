@@ -17,42 +17,19 @@ deque<T>::deque()
     }
 
 template <class T>
-deque<T>::deque(const deque& src)
+deque<T>::deque(const deque& src) : queue<T>(src)
     {
-    if (NULL != src.head)
-        {
-        this->head = src.head->cascadeCopy();
-        findTail(this->head);
-        }
     }
 
 template <class T>
 deque<T>::~deque()
     {
-    if (NULL != this->head)
-        {
-        this->head->cascadeDelete();
-        }
     }
 
 template <class T>
 deque<T>& deque<T>::operator =(const deque<T>& src)
     {
-    // prevent self assignment
-    if (&src != this)
-        {
-        if (NULL != this->head)
-            {
-            this->head->cascadeDelete();
-            }
-        
-        if (NULL != src.head)
-            {
-            this->head = src.head->cascadeCopy();
-            findTail(this->head);
-            }
-        }
-    
+    queue<T>::operator = (src);
     return *this;
     }
 

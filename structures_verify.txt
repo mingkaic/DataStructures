@@ -8,7 +8,6 @@ node (abstract)
     |
     |----treeNode (doubly linked tree node)
     |----pTreeNode (parented doubly linked tree node)
-    |       |----RBNode (RBTree file)
 
 comparable
 pair

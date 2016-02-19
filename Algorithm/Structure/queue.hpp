@@ -1,5 +1,5 @@
 //
-//  Queue.hpp
+//  queue.hpp
 //  List
 //
 //  Created by Mingkai Chen on 2014-06-12.

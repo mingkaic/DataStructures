@@ -11,6 +11,7 @@
 #define __NODE__H
 
 #include <cstdlib>
+#include "genericHandles.hpp"
 
 // abstract class
 template <class T>

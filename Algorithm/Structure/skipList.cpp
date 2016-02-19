@@ -181,6 +181,7 @@ template <class T>
 bool skipList<T>::remove(T data)
 	{
 	bool found = true;
+	skipNode<T>* buffer = head;
 	
 	if (NULL == head || data < head->getData())
 		{
@@ -188,14 +189,12 @@ bool skipList<T>::remove(T data)
 		}
 	else if (data == head->getData())
 		{
-		skipNode<T>* buffer = head;
 		head = head->nexts[0];
 		delete buffer;
 		}
 	else
 		{
 		skipNode<T>* parent;
-		skipNode<T>* buffer = head;
 		size_t curHeight;
 		std::vector<skipNode<T>*> last;
 		while (NULL != buffer->nexts[0] && data > buffer->nexts[0]->getData())
